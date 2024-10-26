@@ -1,2 +1,15 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+  let message = "waiting for message";
+
+  const ws = new WebSocket("wss://echo.websocket.org");
+
+  ws.addEventListener("message", (event) => {
+    try {
+      message = JSON.parse(event.data).message;
+    } catch (e) {
+      message = event.data;
+    }
+  });
+</script>
+
+<h1>{message}</h1>
